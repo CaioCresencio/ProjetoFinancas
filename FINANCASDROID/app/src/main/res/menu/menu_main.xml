@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.financasdroid.VIEW.MainActivity">
+    <item
+        android:id="@+id/action_cadastrar_categoria"
+        android:orderInCategory="100"
+        android:title="@string/action_cadastrar_categoria"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_cadastrar_lancamento"
+        android:orderInCategory="100"
+        android:title="@string/action_cadastrar_lancamento"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_listar_creditos_mensais"
+        android:orderInCategory="100"
+        android:title="@string/action_listar_creditos_mensais"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_listar_debitos_mensais"
+        android:orderInCategory="100"
+        android:title="@string/action_listar_debitos_mensais"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_listar_orcamento_final"
+        android:orderInCategory="100"
+        android:title="@string/action_listar_orcamento_final"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_exibir_grafico"
+        android:orderInCategory="100"
+        android:title="@string/action_exibir_grafico"
+        app:showAsAction="never" />
+</menu>

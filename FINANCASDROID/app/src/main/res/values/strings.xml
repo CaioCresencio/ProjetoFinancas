@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">FINANCASDROID</string>
+    <string name="action_cadastrar_categoria">Cadastrar Categorias</string>
+    <string name="action_cadastrar_lancamento">Inserir Lançamento</string>
+    <string name="action_listar_creditos_mensais">Listar Créditos Mensais</string>
+    <string name="action_listar_debitos_mensais">Listar Débitos Mensais</string>
+    <string name="action_listar_orcamento_final">Listar Orcamento Final</string>
+    <string name="action_exibir_grafico">Gráfico de Pizza</string>
+
+
+    <string name="title_activity_criar_categoria">CriarCategoria</string>
+    <string name="title_activity_lancamento">Lançamento</string>
+</resources>
