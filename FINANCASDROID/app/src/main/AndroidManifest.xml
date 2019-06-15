@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".VIEW.DebitosMensais"></activity>
+        <activity android:name=".VIEW.Grafico"></activity>
         <activity android:name=".VIEW.CreditosMensais" />
         <activity android:name=".VIEW.OrcamentoFinal" />
         <activity android:name=".VIEW.CriarLancamento" />

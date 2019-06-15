@@ -41,11 +41,13 @@ public class DebitosMensaisAdapter extends RecyclerView.Adapter<DebitosMensaisAd
     class WordViewHolder extends RecyclerView.ViewHolder{
 
         public final TextView wordItemView;
+        public final TextView viewValor;
         final DebitosMensaisAdapter mAdapter;
 
         public WordViewHolder(View itemView, DebitosMensaisAdapter adapter) {
             super(itemView);
             this.wordItemView = itemView.findViewById(R.id.word);
+            this.viewValor = itemView.findViewById(R.id.textViewValor);
             this.mAdapter = adapter;
         }
 
@@ -73,13 +75,10 @@ public class DebitosMensaisAdapter extends RecyclerView.Adapter<DebitosMensaisAd
         CategoriaDAO categoriaDAO = new CategoriaDAO(contextoDebitossMensais);
         Categoria categoria = categoriaDAO.getCategoriaPorID(mCurrent.getIdCategoria());
 
-            holder.wordItemView.setText("LANÇAMENTO " +
-                    "\n\t\t\tDescrição: "+ mCurrent.getDescricao() +
-                    "\n\t\t\tData: "+ mCurrent.getData() +
-                    "\n\t\t\tValor: "+ mCurrent.getValor() +
-                    "\n\t\t\tTipo: Débito" +
-                    "\n\t\t\tCategoria: "+ categoria.getDescricaoCategoria() +
-                    "\n-------------------------------------------");
+        holder.wordItemView.setText(
+                "Descrição: "+ mCurrent.getDescricao() +
+                        "\n"+ mCurrent.getData());
+        holder.viewValor.setText("R$: "+mCurrent.getValor());
 
     }
 

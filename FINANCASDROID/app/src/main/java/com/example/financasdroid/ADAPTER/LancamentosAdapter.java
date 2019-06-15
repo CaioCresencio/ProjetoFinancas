@@ -159,10 +159,8 @@ public class LancamentosAdapter extends RecyclerView.Adapter<LancamentosAdapter.
                     "\n\t\t\tCategoria: "+ categoria.getDescricaoCategoria() +
                     "\n-------------------------------------------");
         }
-
-
-
     }
+
 
 
     @Override

@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_exibir_grafico) {
             mostrarMensagem("Exibir Grafico Pizza");
+            it = new Intent(this,Grafico.class);
+            startActivity(it);
             return true;
         }
 

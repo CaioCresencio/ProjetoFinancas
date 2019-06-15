@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FINANCASDROID</string>
+    <string name="app_name">Finanças Droid</string>
     <string name="action_cadastrar_categoria">Cadastrar Categorias</string>
     <string name="action_cadastrar_lancamento">Inserir Lançamento</string>
     <string name="action_listar_creditos_mensais">Listar Créditos Mensais</string>

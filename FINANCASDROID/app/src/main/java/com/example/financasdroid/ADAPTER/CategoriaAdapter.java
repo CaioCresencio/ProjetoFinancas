@@ -94,13 +94,14 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.Word
                 public void onClick(DialogInterface dialog, int which) {
 
                     CategoriaDAO categoriaDAO = new CategoriaDAO(contextoCriarCategoria);
-                    categoriaDAO.excluirCategoria(categoria);
+                    if(categoriaDAO.excluirCategoria(categoria)){
+                        mWordList.remove(mPosition);
+                        mAdapter.notifyDataSetChanged();
 
-                    mWordList.remove(mPosition);
-                    mAdapter.notifyDataSetChanged();
-
-                    Toast.makeText(mContext, "EXCLUIDO COM SUCESSO !!!", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(mContext, "EXCLUIDO COM SUCESSO !!!", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(mContext, "ERRO, EXISTE LANÇAMENTOS COM A CATEGORIA SELECIONADA!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             adb.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

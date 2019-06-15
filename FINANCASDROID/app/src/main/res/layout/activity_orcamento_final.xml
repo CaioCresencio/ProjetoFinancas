@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".VIEW.OrcamentoFinal">
+    tools:context=".VIEW.OrcamentoFinal"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"

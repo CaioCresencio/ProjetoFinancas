@@ -102,6 +102,24 @@ public class LancamentoDAO {
         return listDespesas;
     }
 
+
+    public double getValorPorCategoria(int idCategoria){
+        double valor=0;
+        ArrayList<Lancamento> listDespesas = new ArrayList<>();
+        Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_VALOR,},
+                ConexaoDB.COLUNA_LANCAMENTO_CATEGORIA + " = "+idCategoria,null, null, null, null);
+
+        while(cursor.moveToNext()){
+
+            valor += cursor.getDouble(0);
+        }
+
+        return valor;
+    }
+
+
+
     public void excluirLancamento(Lancamento lancamento){
         banco.delete(ConexaoDB.TABELA_LANCAMENTO ,ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO + " = ? AND " + ConexaoDB.COLUNA_LANCAMENTO_TIPO + " = ?", new String[]{lancamento.getDescricao(), lancamento.getTipo()});
     }

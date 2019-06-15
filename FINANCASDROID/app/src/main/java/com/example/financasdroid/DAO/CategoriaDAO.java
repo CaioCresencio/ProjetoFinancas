@@ -72,8 +72,29 @@ public class CategoriaDAO {
     }
 
 
-    public void excluirCategoria(Categoria categoria){
-        banco.delete(ConexaoDB.TABELA_CATEGORIA ,ConexaoDB.COLUNA_CATEGORIA_IDCATEGORIA + " = ?", new String[]{String.valueOf(categoria.getIdCategoria())});
+    public boolean excluirCategoria(Categoria categoria){
+        boolean retorno = false;
+
+        if(!verificaLancamentoCategoria(categoria.getIdCategoria())){
+            banco.delete(ConexaoDB.TABELA_CATEGORIA ,ConexaoDB.COLUNA_CATEGORIA_IDCATEGORIA + " = ?", new String[]{String.valueOf(categoria.getIdCategoria())});
+            retorno = true;
+        }
+
+        return retorno;
+    }
+
+
+    private boolean verificaLancamentoCategoria(int idCategoria){
+        boolean retorno = false;
+
+        Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_CATEGORIA},
+                ConexaoDB.COLUNA_LANCAMENTO_CATEGORIA + " = "+idCategoria,null, null, null, null);
+
+        if(cursor.moveToNext()){
+            retorno = true;
+        }
+        return retorno;
     }
 
 }
