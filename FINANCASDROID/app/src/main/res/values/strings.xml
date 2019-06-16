@@ -8,6 +8,12 @@
     <string name="action_exibir_grafico">Gráfico de Pizza</string>
 
 
-    <string name="title_activity_criar_categoria">CriarCategoria</string>
+    <string name="title_activity_categoria">Categoria</string>
+    <string name="title_activity_criar_categoria">Criar Categoria</string>
     <string name="title_activity_lancamento">Lançamento</string>
+    <string name="title_activity_criar_lancamento">Criar Lançamento</string>
+    <string name="title_activity_creditos_mensais">Créditos Mensais</string>
+    <string name="title_activity_debitos_mensais">Débitos Mensais</string>
+    <string name="title_activity_orcamento_final">Orçamento Final</string>
+    <string name="title_activity_grafico">Gráfico</string>
 </resources>

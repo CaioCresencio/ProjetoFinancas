@@ -2,6 +2,7 @@ package com.example.financasdroid.VIEW;
 
 import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
+import android.media.Image;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,10 @@ public class OrcamentoFinal extends AppCompatActivity {
 
     private static class ViewHolder{
         EditText editDataInicial;
-        //EditText editDataFinal;
+        EditText editDataFinal;
+
+        ImageButton imageButtonDataInicial;
+        ImageButton imageButtonDataFinal;
 
         EditText editCredito;
         EditText editDebito;
@@ -51,6 +56,9 @@ public class OrcamentoFinal extends AppCompatActivity {
     private LancamentoDAO lancamentoDAO;
     private ArrayList<Lancamento> listLancamento;
 
+    private long dataInicialSelecionada;
+    private long dataFinalSelecionada;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +66,7 @@ public class OrcamentoFinal extends AppCompatActivity {
 
         criarComponentes();
 
-        viewHolder.editDataInicial.setOnClickListener(new View.OnClickListener(){
+        viewHolder.imageButtonDataInicial.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -75,6 +83,10 @@ public class OrcamentoFinal extends AppCompatActivity {
                     @Override
                     public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
+                        Calendar c = Calendar.getInstance();
+                        c.set(year,month,dayOfMonth); // dia de hoje
+                        dataInicialSelecionada = c.getTimeInMillis();
+
                         int ano = year;
                         int mes = month+1; // Ele inica de 0
                         int dia = dayOfMonth;
@@ -88,35 +100,39 @@ public class OrcamentoFinal extends AppCompatActivity {
             }
         });
 
-//        viewHolder.editDataFinal.setOnClickListener(new View.OnClickListener(){
-//            @RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder builder = new AlertDialog.Builder(OrcamentoFinal.this);
-//                View view = getLayoutInflater().inflate(R.layout.calendario, null);
-//
-//                final CalendarView widget = (CalendarView) view.findViewById(R.id.calendarView);
-//
-//                builder.setView(view);
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//
-//                widget.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//                    @Override
-//                    public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//
-//                        int ano = year;
-//                        int mes = month;
-//                        int dia = dayOfMonth;
-//
-//                        dataSelecionada = dia + "-" + mes + "-" + ano;
-//                        viewHolder.editDataFinal.setText(dataSelecionada);
-//                    }
-//                });
-//
-//
-//            }
-//        });
+        viewHolder.imageButtonDataFinal.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(OrcamentoFinal.this);
+                View view = getLayoutInflater().inflate(R.layout.calendario, null);
+
+                final CalendarView widget = (CalendarView) view.findViewById(R.id.calendarView);
+
+                builder.setView(view);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                widget.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+
+                        Calendar c = Calendar.getInstance();
+                        c.set(year,month,dayOfMonth); // dia de hoje
+                        dataFinalSelecionada = c.getTimeInMillis();
+
+                        int ano = year;
+                        int mes = month+1; // Ele inica de 0
+                        int dia = dayOfMonth;
+
+                        dataSelecionada = dia + "-" + mes + "-" + ano;
+                        viewHolder.editDataFinal.setText(dataSelecionada);
+                    }
+                });
+
+
+            }
+        });
 
 
         viewHolder.buttonFiltrar.setOnClickListener(new View.OnClickListener() {
@@ -134,23 +150,30 @@ public class OrcamentoFinal extends AppCompatActivity {
         });
     }
 
+
+
     private void buttonFiltrarClicado(){
         String mensagem = validarCamposVazios();
-        String dataInicial = viewHolder.editDataInicial.getText().toString();
-        //String dataFinal = viewHolder.editDataFinal.getText().toString();
         valorDebito = 0.0;
         valorCredito = 0.0;
 
         if(mensagem.equals("SUCESSO")){
             lancamentoDAO = new LancamentoDAO(this);
-            listLancamento = lancamentoDAO.getLancamentoPorPeriodo(dataInicial);
-
+            listLancamento = lancamentoDAO.getTodosLancamentos();
             System.out.println("Tamanho lista: " + listLancamento.size());
+            System.out.println("Data inicial em long: " + dataInicialSelecionada);
+            System.out.println("Data final em long: " + dataFinalSelecionada);
+
             for (Lancamento l:listLancamento) {
-                if(l.getTipo().equals("C")){
-                    valorCredito+=l.getValor();
-                }else{
-                    valorDebito+=l.getValor();
+                System.out.println("Data Lancamento  em Long: " + l.getData());
+
+                if ((Long.parseLong(l.getData()) > dataInicialSelecionada) && (Long.parseLong(l.getData()) < dataFinalSelecionada)){
+                    System.out.println("Tipo: " + l.getTipo());
+                    if(l.getTipo().equals("C")){
+                        valorCredito+=l.getValor();
+                    }else{
+                        valorDebito+=l.getValor();
+                    }
                 }
             }
 
@@ -182,9 +205,12 @@ public class OrcamentoFinal extends AppCompatActivity {
 
     private void criarComponentes(){
         this.viewHolder.editDataInicial = (EditText) findViewById(R.id.editDataInicial);
-        //this.viewHolder.editDataFinal = (EditText) findViewById(R.id.editDataFinal);
+        this.viewHolder.editDataFinal = (EditText) findViewById(R.id.editDataFinal);
         this.viewHolder.editCredito = (EditText) findViewById(R.id.editCreditos);
         this.viewHolder.editDebito = (EditText) findViewById(R.id.editDebitos);
+
+        this.viewHolder.imageButtonDataInicial = (ImageButton) findViewById(R.id.imageButtonDataInicial);
+        this.viewHolder.imageButtonDataFinal = (ImageButton) findViewById(R.id.imageButtonDataFinal);
 
         this.viewHolder.txtResultado= (TextView) findViewById(R.id.txtOrcamentoFinal);
 

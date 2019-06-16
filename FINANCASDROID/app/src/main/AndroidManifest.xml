@@ -9,19 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VIEW.DebitosMensais"></activity>
-        <activity android:name=".VIEW.Grafico"></activity>
-        <activity android:name=".VIEW.CreditosMensais" />
-        <activity android:name=".VIEW.OrcamentoFinal" />
-        <activity android:name=".VIEW.CriarLancamento" />
+
+
+        <activity android:name=".VIEW.CriarCategoria"
+            android:label="@string/title_activity_criar_categoria"/>
+
+        <activity android:name=".VIEW.DebitosMensais"
+            android:label="@string/title_activity_debitos_mensais"/>
+
+        <activity android:name=".VIEW.Grafico"
+            android:label="@string/title_activity_grafico"/>
+
+        <activity android:name=".VIEW.CreditosMensais"
+            android:label="@string/title_activity_creditos_mensais"/>
+
+        <activity android:name=".VIEW.OrcamentoFinal"
+            android:label="@string/title_activity_orcamento_final"/>
+
+        <activity android:name=".VIEW.CriarLancamento"
+            android:label="@string/title_activity_criar_lancamento"/>
+
         <activity
             android:name=".VIEW.Lancamentos"
             android:label="@string/title_activity_lancamento"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".VIEW.CriarCategoria" />
+
         <activity
             android:name=".VIEW.Categorias"
-            android:label="@string/title_activity_criar_categoria"
+            android:label="@string/title_activity_categoria"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VIEW.MainActivity"

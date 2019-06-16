@@ -14,7 +14,9 @@ import com.example.financasdroid.MODEL.Lancamento;
 import com.example.financasdroid.R;
 import com.example.financasdroid.VIEW.CreditosMensais;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CreditosMensaisAdapter extends RecyclerView.Adapter<CreditosMensaisAdapter.WordViewHolder> {
 
@@ -70,9 +72,11 @@ public class CreditosMensaisAdapter extends RecyclerView.Adapter<CreditosMensais
         CategoriaDAO categoriaDAO = new CategoriaDAO(contextoCreditosMensais);
         Categoria categoria = categoriaDAO.getCategoriaPorID(mCurrent.getIdCategoria());
 
-            holder.wordItemView.setText(
+        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
+
+        holder.wordItemView.setText(
                     "Descrição: "+ mCurrent.getDescricao() +
-                    "\n"+ mCurrent.getData());
+                    "\n"+ dateString);
             holder.viewValor.setText("R$: "+mCurrent.getValor());
 
     }

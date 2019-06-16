@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,14 +24,19 @@ import com.example.financasdroid.R;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class CriarLancamento extends AppCompatActivity {
 
     private static class ViewHolder{
         EditText editDescricao;
         EditText editValor;
-        TextView dataTeste;
+        EditText editData;
+
+        ImageButton imageButtonData;
+
         Spinner spinnerTipo;
         Spinner spinnerCategoria;
 
@@ -55,7 +61,7 @@ public class CriarLancamento extends AppCompatActivity {
     private String tipo;
 
     private String dataSelecionada;
-
+    private long dataLongSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +106,7 @@ public class CriarLancamento extends AppCompatActivity {
         });
 
 
-        viewHolder.dataTeste.setOnClickListener(new View.OnClickListener(){
+        viewHolder.imageButtonData.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
@@ -117,13 +123,18 @@ public class CriarLancamento extends AppCompatActivity {
                     @Override
                     public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
+
+                        Calendar c = Calendar.getInstance();
+                        c.set(year,month,dayOfMonth); // dia de hoje
+                        dataLongSelecionada = c.getTimeInMillis();
+
+
                         int ano = year;
                         int mes = month+1;//Inicia de 0
                         int dia = dayOfMonth;
 
                         dataSelecionada = dia + "-" + mes + "-" + ano;
-                        //viewHolder.editData.setText(dataSelecionada);
-                        viewHolder.dataTeste.setText("Data: "+dataSelecionada);
+                        viewHolder.editData.setText(dataSelecionada);
                     }
                 });
 
@@ -161,10 +172,10 @@ public class CriarLancamento extends AppCompatActivity {
             if(categoria != null){
                 descricao = viewHolder.editDescricao.getText().toString();
                 valor = Double.parseDouble(viewHolder.editValor.getText().toString());
-                data = viewHolder.dataTeste.getText().toString();
+                //data = viewHolder.dataTeste.getText().toString();
 
 
-                lancamento = new Lancamento(descricao, data, valor, tipo, categoria.getIdCategoria());
+                lancamento = new Lancamento(descricao, String.valueOf(dataLongSelecionada), valor, tipo, categoria.getIdCategoria());
                 lancamentoDAO = new LancamentoDAO(this);
                 lancamentoDAO.inserirLancamento(lancamento);
 
@@ -204,13 +215,16 @@ public class CriarLancamento extends AppCompatActivity {
     }
 
     private void criarComponentes(){
-        this.viewHolder.dataTeste = (TextView) findViewById(R.id.textViewTeste);
+        //this.viewHolder.dataTeste = (TextView) findViewById(R.id.textViewTeste);
         this.viewHolder.editDescricao = (EditText) findViewById(R.id.editDescricao);
         this.viewHolder.editValor = (EditText) findViewById(R.id.editValor);
+        this.viewHolder.editData = (EditText) findViewById(R.id.editData);
 
         this.viewHolder.spinnerTipo = (Spinner) findViewById(R.id.spinnerTipo);
         this.viewHolder.spinnerCategoria = (Spinner) findViewById(R.id.spinnerCategoria);
 
+
+        this.viewHolder.imageButtonData = (ImageButton) findViewById(R.id.imageButtonData);
         this.viewHolder.buttonSalvar = (Button) findViewById(R.id.btnSalvar);
         this.viewHolder.buttonCancelar = (Button) findViewById(R.id.btnCancelar);
     }
