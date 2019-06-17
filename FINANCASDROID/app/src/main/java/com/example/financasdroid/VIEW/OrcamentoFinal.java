@@ -76,7 +76,7 @@ public class OrcamentoFinal extends AppCompatActivity {
                 final CalendarView widget = (CalendarView) view.findViewById(R.id.calendarView);
 
                 builder.setView(view);
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
                 dialog.show();
 
                 widget.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -93,9 +93,10 @@ public class OrcamentoFinal extends AppCompatActivity {
 
                         dataSelecionada = dia + "-" + mes + "-" + ano;
                         viewHolder.editDataInicial.setText(dataSelecionada);
+                        dialog.cancel();
+
                     }
                 });
-
 
             }
         });
@@ -110,8 +111,8 @@ public class OrcamentoFinal extends AppCompatActivity {
                 final CalendarView widget = (CalendarView) view.findViewById(R.id.calendarView);
 
                 builder.setView(view);
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                final AlertDialog dialog2 = builder.create();
+                dialog2.show();
 
                 widget.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                     @Override
@@ -127,6 +128,7 @@ public class OrcamentoFinal extends AppCompatActivity {
 
                         dataSelecionada = dia + "-" + mes + "-" + ano;
                         viewHolder.editDataFinal.setText(dataSelecionada);
+                        dialog2.cancel();
                     }
                 });
 
@@ -153,6 +155,9 @@ public class OrcamentoFinal extends AppCompatActivity {
 
 
     private void buttonFiltrarClicado(){
+        String dataInicial = viewHolder.editDataInicial.getText().toString();
+        String dataFinal = viewHolder.editDataFinal.getText().toString();
+
         String mensagem = validarCamposVazios();
         valorDebito = 0.0;
         valorCredito = 0.0;
@@ -160,15 +165,28 @@ public class OrcamentoFinal extends AppCompatActivity {
         if(mensagem.equals("SUCESSO")){
             lancamentoDAO = new LancamentoDAO(this);
             listLancamento = lancamentoDAO.getTodosLancamentos();
-            System.out.println("Tamanho lista: " + listLancamento.size());
-            System.out.println("Data inicial em long: " + dataInicialSelecionada);
-            System.out.println("Data final em long: " + dataFinalSelecionada);
+//            System.out.println("Tamanho lista: " + listLancamento.size());
+//            System.out.println("Data inicial em long: " + dataInicialSelecionada);
+//            System.out.println("Data final em long: " + dataFinalSelecionada);
 
             for (Lancamento l:listLancamento) {
                 System.out.println("Data Lancamento  em Long: " + l.getData());
 
-                if ((Long.parseLong(l.getData()) > dataInicialSelecionada) && (Long.parseLong(l.getData()) < dataFinalSelecionada)){
+                /*if ((Long.parseLong(l.getData()) >= dataInicialSelecionada) && (Long.parseLong(l.getData()) <= dataFinalSelecionada)){
                     System.out.println("Tipo: " + l.getTipo());
+                    if(l.getTipo().equals("C")){
+                        valorCredito+=l.getValor();
+                    }else{
+                        valorDebito+=l.getValor();
+                    }
+                }*/
+                System.out.println("Dia lancamento: " +getDia(l.getData()));
+                System.out.println("Dia selecionado data inicial: " +getDia(dataInicial));
+                System.out.println("Dia selecionado data final: " +getDia(dataFinal));
+
+
+                if(((getDia(l.getData()) >= (getDia(dataInicial)))) && (getDia(l.getData()) <= (getDia(dataFinal)))){
+                    Toast.makeText(this, "Data lancamento é maior que data inicial", Toast.LENGTH_SHORT).show();
                     if(l.getTipo().equals("C")){
                         valorCredito+=l.getValor();
                     }else{
@@ -222,4 +240,39 @@ public class OrcamentoFinal extends AppCompatActivity {
     private void mostrarMensagem(String mensagem){
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
     }
+
+    private int getDia(String data){
+        String [] datas;
+        String aux[];
+
+        datas = data.split("-");
+        aux = datas[0].split(" ");
+        int dia = Integer.parseInt(aux[0]);
+
+        return dia;
+    }
+
+    private String getMes(String data){
+        String [] datas;
+
+
+        datas = data.split("-");
+
+        String dia = datas[1];
+
+        return dia;
+    }
+
+    private String getAno(String data){
+        String [] datas;
+
+        datas = data.split("-");
+
+        String dia = datas[2];
+
+        return dia;
+    }
+
+
+
 }

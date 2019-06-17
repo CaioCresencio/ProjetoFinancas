@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#FF8C00</color>
     <color name="colorAccent">#D81B60</color>
     <color name="cinza">#DCDCDC</color>
+    <color name="preto">#000</color>
+    <color name="laranja">#FFA500</color>
 </resources>

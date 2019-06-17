@@ -116,7 +116,7 @@ public class CriarLancamento extends AppCompatActivity {
                 final CalendarView widget = (CalendarView) view.findViewById(R.id.calendarView);
 
                 builder.setView(view);
-                AlertDialog dialog = builder.create();
+                final AlertDialog dialog = builder.create();
                 dialog.show();
 
                 widget.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -135,6 +135,7 @@ public class CriarLancamento extends AppCompatActivity {
 
                         dataSelecionada = dia + "-" + mes + "-" + ano;
                         viewHolder.editData.setText(dataSelecionada);
+                        dialog.cancel();
                     }
                 });
 
@@ -175,7 +176,7 @@ public class CriarLancamento extends AppCompatActivity {
                 //data = viewHolder.dataTeste.getText().toString();
 
 
-                lancamento = new Lancamento(descricao, String.valueOf(dataLongSelecionada), valor, tipo, categoria.getIdCategoria());
+                lancamento = new Lancamento(descricao, dataSelecionada, valor, tipo, categoria.getIdCategoria());
                 lancamentoDAO = new LancamentoDAO(this);
                 lancamentoDAO.inserirLancamento(lancamento);
 

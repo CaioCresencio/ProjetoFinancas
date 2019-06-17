@@ -144,12 +144,12 @@ public class LancamentosAdapter extends RecyclerView.Adapter<LancamentosAdapter.
         CategoriaDAO categoriaDAO = new CategoriaDAO(contextoDespesas);
         Categoria categoria = categoriaDAO.getCategoriaPorID(mCurrent.getIdCategoria());
 
-        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
+        //String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
 
         if(mCurrent.getTipo().equals("C")){
             holder.wordItemView.setText("LANÇAMENTO " +
                     "\n\t\t\tDescrição: "+ mCurrent.getDescricao() +
-                    "\n\t\t\tData: "+ dateString +
+                    "\n\t\t\tData: "+ mCurrent.getData() +
                     "\n\t\t\tValor: "+ mCurrent.getValor() +
                     "\n\t\t\tTipo: Crédito" +
                     "\n\t\t\tCategoria: "+ categoria.getDescricaoCategoria() +
@@ -157,7 +157,7 @@ public class LancamentosAdapter extends RecyclerView.Adapter<LancamentosAdapter.
         }else{
             holder.wordItemView.setText("LANÇAMENTO " +
                     "\n\t\t\tDescrição: "+ mCurrent.getDescricao() +
-                    "\n\t\t\tData: "+ dateString +
+                    "\n\t\t\tData: "+ mCurrent.getData() +
                     "\n\t\t\tValor: "+ mCurrent.getValor() +
                     "\n\t\t\tTipo: Débito" +
                     "\n\t\t\tCategoria: "+ categoria.getDescricaoCategoria() +

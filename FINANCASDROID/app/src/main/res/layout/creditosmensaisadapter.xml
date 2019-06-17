@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
-    android:background="@color/cardview_shadow_end_color">
+    android:background="@drawable/borda"
+    android:layout_margin="5dp"
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/word"

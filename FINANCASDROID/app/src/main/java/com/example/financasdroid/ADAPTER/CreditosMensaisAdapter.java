@@ -72,11 +72,11 @@ public class CreditosMensaisAdapter extends RecyclerView.Adapter<CreditosMensais
         CategoriaDAO categoriaDAO = new CategoriaDAO(contextoCreditosMensais);
         Categoria categoria = categoriaDAO.getCategoriaPorID(mCurrent.getIdCategoria());
 
-        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
+        //String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
 
         holder.wordItemView.setText(
                     "Descrição: "+ mCurrent.getDescricao() +
-                    "\n"+ dateString);
+                    "\n"+ mCurrent.getData());
             holder.viewValor.setText("R$: "+mCurrent.getValor());
 
     }

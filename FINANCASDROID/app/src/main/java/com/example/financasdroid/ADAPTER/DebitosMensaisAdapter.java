@@ -77,12 +77,12 @@ public class DebitosMensaisAdapter extends RecyclerView.Adapter<DebitosMensaisAd
         CategoriaDAO categoriaDAO = new CategoriaDAO(contextoDebitossMensais);
         Categoria categoria = categoriaDAO.getCategoriaPorID(mCurrent.getIdCategoria());
 
-        String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
+        //String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(Long.parseLong(mCurrent.getData())));
 
 
         holder.wordItemView.setText(
-                "Descrição: "+ mCurrent.getDescricao() +
-                        "\n"+ dateString);
+                mCurrent.getDescricao() +
+                        "\n"+ mCurrent.getData());
         holder.viewValor.setText("R$: "+mCurrent.getValor());
 
     }
@@ -95,4 +95,3 @@ public class DebitosMensaisAdapter extends RecyclerView.Adapter<DebitosMensaisAd
 
 
 }
-
