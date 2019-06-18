@@ -1,12 +1,23 @@
 package com.example.financasdroid.MODEL;
 
-public class Lancamento {
+import java.io.Serializable;
+
+public class Lancamento implements Serializable {
     private String descricao;
     private String data;
     private double valor;
     private String tipo;
     private int idCategoria;
+    private int idLancamento;
 
+    public Lancamento(int idLancamento,String descricao, String data, double valor, String tipo, int idCategoria) {
+        this.setDescricao(descricao);
+        this.setId(idLancamento);
+        this.setData(data);
+        this.setValor(valor);
+        this.setTipo(tipo);
+        this.setIdCategoria(idCategoria);
+    }
     public Lancamento(String descricao, String data, double valor, String tipo, int idCategoria) {
         this.setDescricao(descricao);
         this.setData(data);
@@ -15,7 +26,8 @@ public class Lancamento {
         this.setIdCategoria(idCategoria);
     }
 
-
+    public int getIdLancamento(){return idLancamento;}
+    public void setId(int id){this.idLancamento = id;}
     public String getDescricao() {
         return descricao;
     }

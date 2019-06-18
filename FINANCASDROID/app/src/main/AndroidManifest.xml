@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".VIEW.AtualizarLancamento"
+            android:label="@string/title_activity_attLancamento"/>
 
         <activity android:name=".VIEW.CriarCategoria"
             android:label="@string/title_activity_criar_categoria"/>

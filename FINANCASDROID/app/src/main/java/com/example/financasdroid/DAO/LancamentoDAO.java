@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.animation.LayoutAnimationController;
 
 import com.example.financasdroid.MODEL.Lancamento;
 
@@ -35,7 +36,8 @@ public class LancamentoDAO {
     public ArrayList<Lancamento> getTodosLancamentos(){
         ArrayList<Lancamento> listDespesas = new ArrayList<>();
         Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
-                new String[]{ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_IDLANCAMENTO,
+                        ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
                         ConexaoDB.COLUNA_LANCAMENTO_DATA,
                         ConexaoDB.COLUNA_LANCAMENTO_VALOR,
                         ConexaoDB.COLUNA_LANCAMENTO_TIPO,
@@ -43,11 +45,12 @@ public class LancamentoDAO {
                 null, null, null, null, null);
 
         while(cursor.moveToNext()){
-            Lancamento novoDespesa = new Lancamento(cursor.getString(0),
+            Lancamento novoDespesa = new Lancamento(cursor.getInt(0),
                     cursor.getString(1),
-                    cursor.getDouble(2),
-                    cursor.getString(3),
-                    cursor.getInt(4));
+                    cursor.getString(2),
+                    cursor.getDouble(3),
+                    cursor.getString(4),
+                    cursor.getInt(5));
             listDespesas.add(novoDespesa);
         }
 
@@ -58,7 +61,8 @@ public class LancamentoDAO {
     public ArrayList<Lancamento> getLancamentoPorTipo(String tipo){
         ArrayList<Lancamento> listDespesas = new ArrayList<>();
         Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
-                new String[]{ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_IDLANCAMENTO,
+                        ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
                         ConexaoDB.COLUNA_LANCAMENTO_DATA,
                         ConexaoDB.COLUNA_LANCAMENTO_VALOR,
                         ConexaoDB.COLUNA_LANCAMENTO_TIPO,
@@ -66,11 +70,12 @@ public class LancamentoDAO {
                 ConexaoDB.COLUNA_LANCAMENTO_TIPO + " = ?", new String[]{tipo}, null, null, null);
 
         while(cursor.moveToNext()){
-            Lancamento novoDespesa = new Lancamento(cursor.getString(0),
+            Lancamento novoDespesa = new Lancamento(cursor.getInt(0),
                     cursor.getString(1),
-                    cursor.getDouble(2),
-                    cursor.getString(3),
-                    cursor.getInt(4));
+                    cursor.getString(2),
+                    cursor.getDouble(3),
+                    cursor.getString(4),
+                    cursor.getInt(5));
             listDespesas.add(novoDespesa);
         }
 
@@ -83,7 +88,8 @@ public class LancamentoDAO {
 
         ArrayList<Lancamento> listDespesas = new ArrayList<>();
         Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
-                new String[]{ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_IDLANCAMENTO,
+                        ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,
                         ConexaoDB.COLUNA_LANCAMENTO_DATA,
                         ConexaoDB.COLUNA_LANCAMENTO_VALOR,
                         ConexaoDB.COLUNA_LANCAMENTO_TIPO,
@@ -91,11 +97,12 @@ public class LancamentoDAO {
                 ConexaoDB.COLUNA_LANCAMENTO_DATA + " >= ?", new String[]{dataInicial}, null, null, null);
 
         while(cursor.moveToNext()){
-            Lancamento novoDespesa = new Lancamento(cursor.getString(0),
+            Lancamento novoDespesa = new Lancamento(cursor.getInt(0),
                     cursor.getString(1),
-                    cursor.getDouble(2),
-                    cursor.getString(3),
-                    cursor.getInt(4));
+                    cursor.getString(2),
+                    cursor.getDouble(3),
+                    cursor.getString(4),
+                    cursor.getInt(5));
             listDespesas.add(novoDespesa);
         }
 
@@ -123,5 +130,25 @@ public class LancamentoDAO {
     public void excluirLancamento(Lancamento lancamento){
         banco.delete(ConexaoDB.TABELA_LANCAMENTO ,ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO + " = ? AND " + ConexaoDB.COLUNA_LANCAMENTO_TIPO + " = ?", new String[]{lancamento.getDescricao(), lancamento.getTipo()});
     }
+    public void atualizarLancamento(Lancamento lancamento){
+        ContentValues values = pegarValores(lancamento);
+        
+        banco.update(ConexaoDB.TABELA_LANCAMENTO,values,"idlancamento = ?",toArgs(lancamento));
+    }
+    private String[] toArgs(Lancamento lancamento) {
+        String[] args = {String.valueOf(lancamento.getIdLancamento())};
 
+        return args;
+    }
+
+    private ContentValues pegarValores(Lancamento lancamento){
+        ContentValues values = new ContentValues();
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_IDLANCAMENTO,lancamento.getIdLancamento());
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_DESCRICAO,lancamento.getDescricao());
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_DATA,lancamento.getData());
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_VALOR,lancamento.getValor());
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_TIPO,lancamento.getTipo());
+        values.put(ConexaoDB.COLUNA_LANCAMENTO_CATEGORIA, lancamento.getIdCategoria());
+        return values;
+    }
 }

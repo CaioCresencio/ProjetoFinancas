@@ -17,6 +17,7 @@ public class ConexaoDB extends SQLiteOpenHelper {
 
     //DADOS TABELA DESPESAS
     public static final String TABELA_LANCAMENTO = "lancamento";
+    public static final String COLUNA_LANCAMENTO_IDLANCAMENTO = "idlancamento";
     public static final String COLUNA_LANCAMENTO_DESCRICAO = "descricao";
     public static final String COLUNA_LANCAMENTO_DATA = "data";
     public static final String COLUNA_LANCAMENTO_VALOR = "valor";
@@ -33,7 +34,8 @@ public class ConexaoDB extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE categoria(idcategoria INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "descricao VARCHAR(50) NOT NULL)");
 
-        db.execSQL("CREATE TABLE lancamento(descricao VARCHAR(50) NOT NULL, " +
+        db.execSQL("CREATE TABLE lancamento(idlancamento INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                                            "descricao VARCHAR(50) NOT NULL , " +
                                             "data VARCHAR(20) NOT NULL, " +
                                             "valor DOUBLE NOT NULL, " +
                                             "tipo VARCHAR NOT NULL, " +

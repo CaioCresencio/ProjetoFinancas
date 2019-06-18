@@ -3,6 +3,7 @@ package com.example.financasdroid.ADAPTER;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +20,9 @@ import com.example.financasdroid.DAO.LancamentoDAO;
 import com.example.financasdroid.MODEL.Categoria;
 import com.example.financasdroid.MODEL.Lancamento;
 import com.example.financasdroid.R;
+import com.example.financasdroid.VIEW.AtualizarLancamento;
 import com.example.financasdroid.VIEW.Lancamentos;
+import com.example.financasdroid.VIEW.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,7 +75,7 @@ public class LancamentosAdapter extends RecyclerView.Adapter<LancamentosAdapter.
 
                     switch (item.getItemId()){
                         case R.id.menu_exibir_item:
-
+                            atualizarItem(lancamento);
                             break;
 
                         case R.id.menu_remover_item:
@@ -94,6 +97,12 @@ public class LancamentosAdapter extends RecyclerView.Adapter<LancamentosAdapter.
             return false;
         }
 
+        private void atualizarItem(Lancamento lancamento){
+            Intent it = new Intent(contextoDespesas, AtualizarLancamento.class);
+            System.out.println(lancamento.getIdLancamento()+"OLHA AEQUIEEEEE");
+            it.putExtra("lancamento",lancamento);
+            contextoDespesas.startActivity(it);
+        }
         private void apagarItem(final int mPosition, final Lancamento lancamento){
             AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
             adb.setTitle("REMOVER ITEM");
