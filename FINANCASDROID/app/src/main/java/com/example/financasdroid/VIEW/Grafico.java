@@ -45,10 +45,12 @@ public class Grafico extends AppCompatActivity {
 
 
         for(Categoria c: categorias){
-            valores.add(new PieEntry((float) lancamentoDAO.getValorPorCategoria(c.getIdCategoria()), c.getDescricaoCategoria()));
+            if((float) lancamentoDAO.getValorPorCategoria(c.getIdCategoria()) != 0.0){
+                valores.add(new PieEntry((float) lancamentoDAO.getValorPorCategoria(c.getIdCategoria()), c.getDescricaoCategoria()));
+            }
         }
 
-        PieDataSet dataSet = new PieDataSet(valores,"Categorias");
+        PieDataSet dataSet = new PieDataSet(valores,"CATEGORIAS:");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
