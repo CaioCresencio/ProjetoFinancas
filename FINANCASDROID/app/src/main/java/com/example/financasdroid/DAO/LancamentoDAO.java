@@ -114,14 +114,15 @@ public class LancamentoDAO {
         double valor=0;
         ArrayList<Lancamento> listDespesas = new ArrayList<>();
         Cursor cursor = banco.query(ConexaoDB.TABELA_LANCAMENTO,
-                new String[]{ConexaoDB.COLUNA_LANCAMENTO_VALOR,},
+                new String[]{ConexaoDB.COLUNA_LANCAMENTO_VALOR, ConexaoDB.COLUNA_LANCAMENTO_TIPO,},
                 ConexaoDB.COLUNA_LANCAMENTO_CATEGORIA + " = "+idCategoria,null, null, null, null);
 
-        while(cursor.moveToNext()){
+        while(cursor.moveToNext()) {
+            if (cursor.getString(1).equals("D")) {
+                valor += cursor.getDouble(0);
 
-            valor += cursor.getDouble(0);
+            }
         }
-
         return valor;
     }
 
